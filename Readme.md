@@ -1,3 +1,3 @@
-**MiniFw - Mini framework inspired by framework**
+**MiniFw - Mini framework inspired by Phalcon framework**
 
 Todo....
