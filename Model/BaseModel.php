@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: przem
- * Date: 23.09.2018
- * Time: 12:53
- */
 
 namespace MiniFw\Model;
 
