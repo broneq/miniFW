@@ -1,0 +1,3 @@
+**MiniFw - Mini framework inspired by framework**
+
+Todo....
