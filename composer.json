@@ -1,0 +1,21 @@
+{
+  "name": "broneq/miniFW",
+  "type": "library",
+  "description": "MiniFw - Mini framework inspired by Phalcon framework",
+  "keywords": [
+    "framework-php",
+    "framework",
+    "php7"
+  ],
+  "homepage": "https://github.com/broneq/miniFW",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Przemysław Broniszewski",
+      "email": "przemek@broniszewski.net"
+    }
+  ],
+  "require": {
+    "php": "^7.2",
+  }
+}
