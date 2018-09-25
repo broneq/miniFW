@@ -34,7 +34,7 @@ class Router
      * Router constructor.
      * @param string $controllerNamespace
      */
-    public function __construct($controllerNamespace = 'MiniFw')
+    public function __construct($controllerNamespace = 'MiniFw\Controller')
     {
         $this->controllerNamespace = $controllerNamespace;
     }
@@ -94,7 +94,7 @@ class Router
             if (!file_exists(__DIR__ . '/../Controller/' . $this->controller . '.php')) {
                 throw new \RuntimeException('Controller not found');
             }
-            $className = $this->controller . '\Controller\\' . $this->controller;
+            $className = $this->controller . '\\' . $this->controller;
             $controller = new $className();
             if (!method_exists($controller, $this->action . 'Action')) {
                 throw new \RuntimeException('Action not found');
