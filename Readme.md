@@ -2,7 +2,7 @@
 
 Framework inspired by Phalcon to do simple thinks on not dedicated servers.
 
-** Usage **
+**Usage**
 
 composer install broneq/miniFW
 
