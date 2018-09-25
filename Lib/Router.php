@@ -9,10 +9,35 @@ namespace MiniFw\Lib;
  */
 class Router
 {
+    /**
+     * @var array
+     */
     private $params = [];
+    /**
+     * @var callable
+     */
     private $notFoundAction;
+    /**
+     * @var string
+     */
     private $controller;
+    /**
+     * @var string
+     */
     private $action = 'index';
+    /**
+     * @var string
+     */
+    private $controllerNamespace;
+
+    /**
+     * Router constructor.
+     * @param string $controllerNamespace
+     */
+    public function __construct($controllerNamespace = 'MiniFw')
+    {
+        $this->controllerNamespace = $controllerNamespace;
+    }
 
     /**
      * Handle route
@@ -69,7 +94,7 @@ class Router
             if (!file_exists(__DIR__ . '/../Controller/' . $this->controller . '.php')) {
                 throw new \RuntimeException('Controller not found');
             }
-            $className = 'MiniFw\Controller\\' . $this->controller;
+            $className = $this->controller . '\Controller\\' . $this->controller;
             $controller = new $className();
             if (!method_exists($controller, $this->action . 'Action')) {
                 throw new \RuntimeException('Action not found');

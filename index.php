@@ -15,7 +15,7 @@ $auth->authRequest();
 
 Di::register('auth', $auth);
 Di::register('router', $router);
-Di::register('db', new \MiniFw\Lib\Db(__DIR__ . '/private/matsim.sqlite'));
+Di::register('db', new \MiniFw\Lib\Db(__DIR__ . '/private/db.sqlite'));
 Di::register('view', new \MiniFw\Lib\View(__DIR__ . '/tpl'));
 $router->registerNotFoundAction(function () {
     header("HTTP/1.0 404 Not Found");
