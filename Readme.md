@@ -7,30 +7,73 @@ Framework inspired by Phalcon to do simple thinks on not dedicated servers.
 composer install broneq/miniFW
 
 ```
-use MiniFw\Lib\Di;
+use MiniFwSample\Config\Sample;
+
 include __DIR__.'/Lib/Autoloader.php';
 $autoloader = new \MiniFw\Lib\Autoloader();
 $autoloader->registerNamespace('MiniFw', __DIR__.'/pathtovendor');
 $autoloader->registerNamespace('SomeOtherNameSpace', __DIR__.'/otherdir');
-$auth = new MiniFw\Lib\Auth;
-$router = new \MiniFw\Lib\Router();
 
-$auth->addUser('admin', 'sha1encodedpassword');
-$auth->authRequest();
-
-Di::register('auth', $auth);
-Di::register('router', $router);
-Di::register('db', new \MiniFw\Lib\Db(__DIR__ . '/private/db.sqlite'));
-Di::register('view', new \MiniFw\Lib\View(__DIR__ . '/tpl'));
-$router->registerNotFoundAction(function () {
-    header("HTTP/1.0 404 Not Found");
-    echo "Page not found.\n";
-    die();
-});
-$router->registerDefaultController('index');
-$router->handle($_GET);
+try {
+    new Sample();
+} catch (Exception $e) {
+    http_response_code(500);
+    echo 'FATAL: ' . $e->getMessage();
+}
 
 ``` 
+
+*Sample config*
+
+```
+namespace MiniFwSample\Config;
+
+
+use MiniFw\Lib\Auth;
+use MiniFw\Lib\Db;
+use MiniFw\Lib\Di\BaseConfig;
+use MiniFw\Lib\Di\Dependency;
+use MiniFw\Lib\Router;
+use MiniFw\Lib\View;
+
+class Sample extends BaseConfig
+{
+    /**
+     * Sample constructor.
+     * @throws \Exception
+     */
+    public function __construct()
+    {
+        $this->addDependency((new Dependency('auth', Auth::class))
+            ->addCall('addUser', 'broneq', 'sha1password')
+            ->addCall('authRequest'));
+        //
+        $this->addDependency((new Dependency('router', Router::class))
+            ->addParameter('\'MiniFwSample\Controller\\')
+            ->addCall('registerNotFoundAction', function () {
+                header("HTTP/1.0 404 Not Found");
+                echo "Page not found.\n";
+                die();
+            })
+            ->addCall('registerDefaultController', 'index')
+            ->addCall('handle', $_GET)
+        );
+        //
+        $this->addDependency((new Dependency('db', Db::class))
+            ->addParameter(__DIR__ . '/../db.sqlite'));
+        //
+        $this->addDependency((new Dependency('view', View::class))
+            ->addParameter(__DIR__ . '/../view'));
+        //
+        //
+        $this->autorun('router');
+        $this->autorun('auth');
+        $this->autorun('view');
+        //
+        $this->build();
+    }
+}
+```
 
 *Sample controller*
 ```

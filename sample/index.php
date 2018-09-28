@@ -1,6 +1,5 @@
 <?php
 
-use MiniFw\Lib\Di;
 use MiniFwSample\Config\Sample;
 
 error_reporting(E_ALL);
