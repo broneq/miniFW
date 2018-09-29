@@ -8,15 +8,19 @@ namespace MiniFw\Lib;
  */
 class Auth
 {
-    const REALM = 'Matsim panel';
     private $users = [];
+    /**
+     * @var string
+     */
+    private $realm;
 
     /**
      * Auth constructor.
+     * @param string $realm
      */
-    public function __construct()
+    public function __construct(string $realm = 'Authorization request')
     {
-
+        $this->realm = $realm;
     }
 
     /**
@@ -44,7 +48,7 @@ class Auth
         $validated = (in_array($user, array_keys($this->users))) && (sha1($pass) == $this->users[$user]);
 
         if (!$validated) {
-            header('WWW-Authenticate: Basic realm="My Realm"');
+            header('WWW-Authenticate: Basic realm="' . $this->realm . '"');
             header('HTTP/1.0 401 Unauthorized');
             $this->unathorized();
         }
