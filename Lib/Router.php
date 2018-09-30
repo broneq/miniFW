@@ -91,10 +91,8 @@ class Router
     private function resolve(): void
     {
         try {
-            if (!file_exists(__DIR__ . '/../Controller/' . $this->controller . '.php')) {
-                throw new \RuntimeException('Controller not found');
-            }
-            $className = $this->controller . '\\' . $this->controller;
+            //@todo missing exception for missing controller
+            $className = rtrim($this->controllerNamespace,'\\') . '\\' . $this->controller;
             $controller = new $className();
             if (!method_exists($controller, $this->action . 'Action')) {
                 throw new \RuntimeException('Action not found');

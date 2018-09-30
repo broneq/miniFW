@@ -16,6 +16,6 @@ class Index extends BaseController
      */
     public function indexAction()
     {
-        $this->view->render('index/hello.phtml', ['var' => 'world']);
+        $this->view->render('index/hello', ['var' => 'world']);
     }
 }
