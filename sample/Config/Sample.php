@@ -20,11 +20,11 @@ class Sample extends BaseConfig
     public function __construct()
     {
         $this->addDependency((new Dependency('auth', Auth::class))
-            ->addCall('addUser', 'broneq', 'sha1password')
+            ->addCall('addUser', 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef') //123
             ->addCall('authRequest'));
         //
         $this->addDependency((new Dependency('router', Router::class))
-            ->addParameter('\'MiniFwSample\Controller\\')
+            ->addParameter('MiniFwSample\Controller\\')
             ->addCall('registerNotFoundAction', function () {
                 header("HTTP/1.0 404 Not Found");
                 echo "Page not found.\n";
@@ -38,11 +38,11 @@ class Sample extends BaseConfig
             ->addParameter(__DIR__ . '/../db.sqlite'));
         //
         $this->addDependency((new Dependency('view', View::class))
-            ->addParameter(__DIR__ . '/../view'));
+            ->addParameter(__DIR__ . '/../tpl'));
         //
         //
-        $this->autorun('router');
         $this->autorun('auth');
+        $this->autorun('router');
         $this->autorun('view');
         //
         $this->build();

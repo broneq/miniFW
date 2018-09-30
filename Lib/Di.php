@@ -1,6 +1,7 @@
 <?php
 
 namespace MiniFw\Lib;
+
 use MiniFw\Lib\Di\Dependency;
 use MiniFw\Lib\Di\DependencyFactory;
 
@@ -13,9 +14,11 @@ class Di
     private static $di = [];
 
 
-    public static function registerDependency(Dependency $dependency) {
+    public static function registerDependency(Dependency $dependency)
+    {
         self::$di[$dependency->getName()] = $dependency;
     }
+
     /**
      * Register class in DI
      * @param string $name
@@ -36,8 +39,8 @@ class Di
     public static function get(string $name)
     {
         if (self::$di[$name]) {
-            DependencyFactory::build(static::$di[$name]);
+            return DependencyFactory::build(static::$di[$name]);
         }
-        throw new \Exception('Service named :'.$name.' not found!');
+        throw new \Exception('Service named: ' . $name . ' not found!');
     }
 }

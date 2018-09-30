@@ -4,7 +4,7 @@ use MiniFwSample\Config\Sample;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-include __DIR__ . '../Lib/Autoloader.php';
+include __DIR__ . '/../Lib/Autoloader.php';
 $autoloader = new \MiniFw\Lib\Autoloader();
 $autoloader->registerNamespace('MiniFw', __DIR__ . '/..');
 $autoloader->registerNamespace('MiniFwSample', __DIR__);

@@ -8,6 +8,8 @@ use MiniFw\Lib\Di;
 
 class DependencyFactory
 {
+    private static $buildCache = [];
+
     /**
      * @param Dependency $dependency
      * @return mixed
@@ -15,6 +17,9 @@ class DependencyFactory
      */
     public static function build(Dependency $dependency)
     {
+        if (isset(self::$buildCache[$dependency->getName()])) {
+            return self::$buildCache[$dependency->getName()];
+        }
         $parameters = [];
         $calls = [];
         foreach ($dependency->getInjectables() as $injectable) {
@@ -26,7 +31,10 @@ class DependencyFactory
                     $parameters[] = $injectable['value'];
                     break;
                 case 'call':
-                    $calls[] = $injectable['value'];
+                    $calls[] = [
+                        'method' => $injectable['method'],
+                        'parameters' => $injectable['parameters']
+                    ];
                     break;
                 default:
                     throw new \RuntimeException('No injectable found  type: ' . $injectable['type'] . ' allowed types are service or parameter...');
@@ -34,6 +42,8 @@ class DependencyFactory
         }
 
         $object = static::factorizeObject($dependency->getClassName(), $parameters);
+
+        static::$buildCache[$dependency->getName()] = $object;
 
         foreach ($calls as $call) {
             $object->{$call['method']}(...$call['parameters']);

@@ -18,10 +18,6 @@ class Dependency
      */
     private $injectables = [];
     /**
-     * @var array
-     */
-    private $calls = [];
-    /**
      * @var string
      */
     private $name;
@@ -65,9 +61,16 @@ class Dependency
         return $this;
     }
 
-    public function addCall(string $methodName, array ...$parameters): self
+    /**
+     * Adds a call for a method
+     * @param string $methodName
+     * @param mixed ...$parameters
+     * @return Dependency
+     */
+    public function addCall(string $methodName, ...$parameters): self
     {
-        $this->calls[] = [
+        $this->injectables[] = [
+            'type' => 'call',
             'method' => $methodName,
             'parameters' => $parameters
         ];

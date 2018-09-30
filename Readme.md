@@ -63,11 +63,11 @@ class Sample extends BaseConfig
             ->addParameter(__DIR__ . '/../db.sqlite'));
         //
         $this->addDependency((new Dependency('view', View::class))
-            ->addParameter(__DIR__ . '/../view'));
+            ->addParameter(__DIR__ . '/../tpl'));
         //
         //
-        $this->autorun('router');
         $this->autorun('auth');
+        $this->autorun('router');
         $this->autorun('view');
         //
         $this->build();
@@ -112,3 +112,8 @@ class InquiryFile extends BaseModel
     }
 }
 ```
+*Issues*
+
+If you are using PHP running in CGI mode you have to add rule to your .htaccess file:
+
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
