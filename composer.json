@@ -1,5 +1,5 @@
 {
-  "name": "broneq/miniFW",
+  "name": "broneq/minifw",
   "type": "library",
   "description": "MiniFw - Mini framework inspired by Phalcon framework",
   "keywords": [
